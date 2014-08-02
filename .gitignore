@@ -1,0 +1,13 @@
+/node_modules/
+/vendor/
+/composer.phar
+/composer.lock
+/.sass-cache/
+*~
+
+# temp file / folders
+TEMP_*/
+
+# IDEs
+.idea/*
+*.iml
