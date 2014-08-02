@@ -4,17 +4,31 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="asapo_tidy.example.class">Asapo\Bundle\TidyBundle\Example</parameter>
+        <parameter key="tidy.class">Asapo\Bundle\TidyBundle\Wrapper\TidyWrapper</parameter>
+        <parameter key="asapo_tidy.tidy.instance.class">tidy</parameter>
+        <parameter key="asapo_tidy.response_listener.class">Asapo\Bundle\TidyBundle\Listener\ResponseListener</parameter>
     </parameters>
 
     <services>
-        <service id="asapo_tidy.example" class="%asapo_tidy.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <!-- tidy wrapper -->
+        <service id="tidy.instance" class="%asapo_tidy.tidy.instance.class%" public="false"/>
+        <service id="tidy" class="%tidy.class%">
+            <!-- TODO config -->
+            <argument type="collection">
+                <argument type="string" key="indent">2</argument>
+                <argument type="string" key="output-xhtml">1</argument>
+                <argument type="string" key="wrap">200</argument>
+            </argument>
+            <argument type="string">utf8</argument>
+            <argument type="service" id="tidy.instance"/>
+        </service>
+
+        <!-- response listener -->
+        <service id="asapo_tidy.response_listener" class="%asapo_tidy.response_listener.class%">
+            <argument type="service" id="tidy"/>
+
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
         </service>
     </services>
-    -->
 </container>
