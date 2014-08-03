@@ -64,8 +64,20 @@ class TidyWrapper implements TidyWrapperInterface
      */
     public function getErrorBuffer()
     {
-        // TODO exctract info in own class
-        return explode("\n", $this->tidy->errorBuffer);
+        // TODO cache
+        $result = array();
+        foreach (explode("\n", $this->tidy->errorBuffer) as $line) {
+            preg_match("/line ([0-9]*) column ([0-9]*) - ([a-zA-z]*): (.*)/", $line, $output);
+            $result[] = array(
+                'full'=> $output[0],
+                'line'=> $output[1],
+                'column'=> $output[2],
+                'type'=> $output[3],
+                'message'=> $output[4]
+            );
+        }
+
+        return $result;
     }
 
     /**

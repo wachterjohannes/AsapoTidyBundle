@@ -24,6 +24,10 @@
 
 {% block head %}
     {{ parent() }}
+
+    <link href="{{ asset('bundles/asapotidy/css/default.css') }}" rel="stylesheet" />
+    <script type="text/javascript" src="{{ asset('bundles/asapotidy/js/highlight.pack.js') }}"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 {% endblock %}
 
 {% block menu %}
@@ -40,19 +44,34 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>Ladybug</h2>
+    <h2>Tidy</h2>
 
     <div class="calls">
         {% for i,d in collector.data %}
             <div class="call call-{{ (i+1) }}">
-                Call {{ (i+1) }}:
-                <ul class="alt">
+                <b>Call {{ (i+1) }}:</b>
+
+                <table class="inline">
+                    <tr>
+                        <th>Type</th>
+                        <th>Line</th>
+                        <th>Column</th>
+                        <th>Message</th>
+                    </tr>
                     {% for error in d.errors %}
-                        <li>
-                            {{ error }}
-                        </li>
+                        <tr>
+                            <td>{{ error.type }}</td>
+                            <td>{{ error.line }}</td>
+                            <td>{{ error.column }}</td>
+                            <td>{{ error.message }}</td>
+                        </tr>
                     {% endfor %}
-                </ul>
+                </table>
+                <pre>
+                    <code class="html">
+                        {{ d.dirty }}
+                    </code>
+                </pre>
             </div>
         {% endfor %}
     </div>
