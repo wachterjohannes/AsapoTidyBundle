@@ -75,9 +75,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                 <pre class="brush: html; toolbar: false;">
-                    {{ d.dirty }}
-                </pre>
+                    {{ dump(d.getDirtyLines(5,7)) }}
             </div>
         {% endfor %}
     </div>
