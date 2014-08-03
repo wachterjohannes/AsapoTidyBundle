@@ -8,6 +8,7 @@
         <parameter key="tidy.class">Asapo\Bundle\TidyBundle\Wrapper\TidyWrapper</parameter>
         <parameter key="asapo_tidy.tidy.instance.class">tidy</parameter>
         <parameter key="asapo_tidy.response_listener.class">Asapo\Bundle\TidyBundle\Listener\ResponseListener</parameter>
+        <parameter key="asapo_tidy.data_collector.class">Asapo\Bundle\TidyBundle\DataCollector\TidyDataCollector</parameter>
     </parameters>
 
     <services>
@@ -29,6 +30,12 @@
             <argument type="service" id="tidy"/>
 
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+        </service>
+
+        <!-- data-collector -->
+        <service id="asapo_tidy.data_collector" class="%asapo_tidy.data_collector.class%">
+            <argument type="service" id="tidy"/>
+            <tag name="data_collector" template="AsapoTidyBundle:DataCollector:tidy" id="asapo_tidy"/>
         </service>
     </services>
 </container>

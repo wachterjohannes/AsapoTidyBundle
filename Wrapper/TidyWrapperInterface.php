@@ -16,4 +16,22 @@ interface TidyWrapperInterface
      * @return string[]
      */
     public function getErrorBuffer();
+
+    /**
+     * returns data of tidy object
+     * @return array
+     */
+    public function getData();
+
+    /**
+     * returns encoding
+     * @return string
+     */
+    public function getEncoding();
+
+    /**
+     * returns options of tidy objects
+     * @return array
+     */
+    public function getOptions();
 }

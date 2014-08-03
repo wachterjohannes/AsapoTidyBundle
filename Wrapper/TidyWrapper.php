@@ -24,6 +24,12 @@ class TidyWrapper implements TidyWrapperInterface
      */
     private $encoding;
 
+    /**
+     * each cleanUp call create an entry
+     * @var array
+     */
+    private $data = array();
+
     public function __construct($options, $encoding, tidy $tidy)
     {
         $this->options = $options;
@@ -36,8 +42,19 @@ class TidyWrapper implements TidyWrapperInterface
      */
     public function cleanUp($html)
     {
+        // reset tidy
+        $this->tidy->errorBuffer = null;
+
+        // repair
         $this->tidy->parseString($html, $this->options, $this->encoding);
         $this->tidy->cleanRepair();
+
+        // save data
+        $this->data[] = array(
+            'dirty' => $html,
+            'clean' => $this->tidy->root()->value,
+            'errors' => $this->getErrorBuffer()
+        );
 
         return $this->tidy->root()->value;
     }
@@ -51,4 +68,27 @@ class TidyWrapper implements TidyWrapperInterface
         return explode("\n", $this->tidy->errorBuffer);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
 }
