@@ -17,8 +17,14 @@ Tidy is a binding for the Tidy HTML clean and repair utility which allows you to
 
 ## Installation
 
+__Development version__
 ````bash
 php composer.phar require asapo/tidy-bundle:dev-develop
+````
+
+__Current Release__
+````bash
+php composer.phar require asapo/tidy-bundle:0.1.*
 ````
 
 ## Configuration
