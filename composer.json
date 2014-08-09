@@ -4,6 +4,7 @@
     "description": "PHP-Tidy wrapper Bundle for Symfony 2 Projects",
     "license": "MIT",
     "keywords": ["tidy"],
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Johannes Wachter",
