@@ -16,12 +16,8 @@
         <service id="tidy.factory" class="%asapo_tidy.tidy.factory.class%" public="false"/>
         <service id="tidy" class="%tidy.class%">
             <!-- TODO config -->
-            <argument type="collection">
-                <argument type="string" key="indent">2</argument>
-                <argument type="string" key="output-xhtml">1</argument>
-                <argument type="string" key="wrap">200</argument>
-            </argument>
-            <argument type="string">utf8</argument>
+            <argument>%asapo_tidy.config%</argument>
+            <argument type="string">%asapo_tidy.encoding%</argument>
             <argument type="service" id="tidy.factory"/>
         </service>
 

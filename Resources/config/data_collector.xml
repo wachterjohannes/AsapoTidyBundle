@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="asapo_tidy.data_collector.class">Asapo\Bundle\TidyBundle\DataCollector\TidyDataCollector</parameter>
+    </parameters>
+
+    <services>
+        <!-- data-collector -->
+        <service id="asapo_tidy.data_collector" class="%asapo_tidy.data_collector.class%">
+            <argument type="service" id="tidy"/>
+            <tag name="data_collector" template="AsapoTidyBundle:DataCollector:tidy" id="asapo_tidy"/>
+        </service>
+    </services>
+</container>

@@ -20,9 +20,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('asapo_tidy');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('config')
+                    ->prototype('scalar')->end()
+                ->end()
+                ->scalarNode('encoding')->defaultValue('utf8')->end()
+                ->scalarNode('response_listener')->defaultValue(true)->end()
+                ->scalarNode('data_collector')->defaultValue(true)->end()
+            ->end();
 
         return $treeBuilder;
     }
