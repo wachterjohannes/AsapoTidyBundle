@@ -59,3 +59,17 @@ or
 ```php
 return new TidyResponse('your_alias', $dirty);
 ```
+
+## Profiler
+
+If the data collector is enabled error or warnings can be displayed over the symfony2 profiler.
+
+### Toolbar
+
+![image](https://cloud.githubusercontent.com/assets/1464615/3867790/88dffd28-2011-11e4-9d1c-004f2bfeecdc.png)
+
+### Panel
+
+![image](https://cloud.githubusercontent.com/assets/1464615/3867794/91f476be-2011-11e4-9620-972f6108162f.png)
+
+
