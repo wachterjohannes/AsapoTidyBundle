@@ -1,0 +1,27 @@
+{
+    "name": "asapo/tidy-bundle",
+    "type": "tidy-bundle",
+    "description": "PHP-Tidy wrapper Bundle for Symfony 2 Projects",
+    "license": "MIT",
+    "keywords": ["tidy"],
+    "authors": [
+        {
+            "name": "Johannes Wachter",
+            "homepage": "https://github.com/wachterjohannes"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "symfony/symfony": "2.5.*",
+        "symfony/monolog-bundle": "2.4.*",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Asapo\\Bundle\\TidyBundle": ""
+        }
+    },
+    "target-dir": "Asapo/Bundle/TidyBundle"
+}

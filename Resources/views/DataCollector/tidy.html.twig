@@ -1,0 +1,100 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set calls_count = collector.data|length %}
+
+    {% set icon %}
+    <img width="24" height="24" alt="asapo_tidy" style="border-width: 0; vertical-align: middle; margin-right: 0;"
+         about="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/24/Html-tags-icon.png"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAD3klEQVR42qVWX2xTVRj/fbd/blkpXXUdI7BicQNngkxxPPmPvrkHQwgmI2HoFI1Zor5NHyZO3QuEBw3RRI0MCA8QDSDim7IsEiPgkmHcqmOorA5Hu+IobOv/z+/U3qZeercmnuTr+e6593y/7/c73zmnhEXaJ5d2N0vXIRYSe1CsrvhqRmxM7JzY8Zfbjl6xikEWgZuIaL+4zzCzJn7pO3lm9Wz0MpQT94y4PS89emRiSYBPf3yuSyYclAnu8oCLABhj8+K+KiADlgCSea907+L/tb0iWf9dABK8S7L4TI1VyK4aBuX+iwYTMjSXbqSSLJUAWlxx2qDH+czs/cSaHRZytao1MQBOSretGv4qzA5vGA7O4v2RNbi30QubXav06WmRajupUhTEcHm1LMagwX6bn17xGw1Pu/mrqz6yOTSsDKxgh9Nm/l5VVwtJ1bylFrZS0EbvJvhrgjx8/XQJ4jH3JDfpf9Ohn/zcFHyerscnMHFjmAWEHLrNnNxexWBQ/CfN/NbdswVbg68glVnAh9/ugdevw0F5dPjGkEhq+GhkNd7YcQxOuwufnz+A8NT3igkUSFkbUgxuiFNfjhz0tbEEp3QmiaPn+jgy8wt5fC60BVJ4XBgMTnppKOLhgL+Fdof64LDrLCBUBGGny24wiCoGufJyXeXZgPb1PUhnUio4JmPhUjpdD8UR8CTxwXADZpP/ZiogKIJg4JteRGbGUC9MnK7Ce1YMFIBmMFi5fD3am3s4k01REaAw7tWzeH3zNK7d0vnIqL+0DxrrHlAAbLc56bAA/BEdZc2mUX2jB/oye76iRGtrH+FQsJsEpCTRE2sSCK1N4NS4jy/H3AWAkkQ2J584v5/CkR9Ki0xSuf7VnqgCUIv8lLmK7qvdTKF13Uhnk7zvi13U3ToFjzOHAxdXcTqvkUY2fvPZY6QW+cR3+1iC31XW8juk1kCV6TuVdkrA2wo91YDxqwN4YWMMl2M1ikFxwxG2btyJqZtX8Ouflyw2JfXRxxc6m0Uzy42WTmZ5i+MaPey/g8M/1+H3Wb2as0j5ebGWwqDIdFLGt1WaoCHPO2tHaT5NherJM6oFONXfeXb7fw47sRozTTsx2peP40JkGS7+5a7muFLSLEjhb+rfdXaiquOa80yxqTtIzmWWPK7Vo9geyf4QYLpwRKre4rkE82Q1NhudR+JmkmF9Z6h3b0vw90pszPQUE+kOVpJLtblbKcSn5yCszLKoO+A1I3NLAGNNFrv00wtZkew257JsVMuXYj0SfOlLv7ypEpYd1SHxS39bivLNZFK5sWgkMZjN5I73d349bhXjH7S8akhgVgIUAAAAAElFTkSuQmCC"/>
+    <span class="sf-toolbar-status{% if calls_count > 0 %} sf-toolbar-status-green{% endif %}">{{ calls_count }}</span>
+    {% endset %}
+
+    {% set text %}
+    {% for i,d in collector.data %}
+        <div class="sf-toolbar-info-piece">
+            <b>{{ d.alias|default('Cleanup') }}:</b>
+            <span class="sf-toolbar-status sf-toolbar-status-red">{{ d.errors|length }}</span>
+        </div>
+    {% endfor %}
+    {% endset %}
+
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': true } %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    <link href="{{ asset('bundles/asapotidy/css/shCore.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/asapotidy/css/shThemeDefault.css') }}" rel="stylesheet" type="text/css"/>
+
+    <script src="{{ asset('bundles/asapotidy/js/shCore.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/asapotidy/js/shBrushXml.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAD3klEQVR42qVWX2xTVRj/fbd/blkpXXUdI7BicQNngkxxPPmPvrkHQwgmI2HoFI1Zor5NHyZO3QuEBw3RRI0MCA8QDSDim7IsEiPgkmHcqmOorA5Hu+IobOv/z+/U3qZeercmnuTr+e6593y/7/c73zmnhEXaJ5d2N0vXIRYSe1CsrvhqRmxM7JzY8Zfbjl6xikEWgZuIaL+4zzCzJn7pO3lm9Wz0MpQT94y4PS89emRiSYBPf3yuSyYclAnu8oCLABhj8+K+KiADlgCSea907+L/tb0iWf9dABK8S7L4TI1VyK4aBuX+iwYTMjSXbqSSLJUAWlxx2qDH+czs/cSaHRZytao1MQBOSretGv4qzA5vGA7O4v2RNbi30QubXav06WmRajupUhTEcHm1LMagwX6bn17xGw1Pu/mrqz6yOTSsDKxgh9Nm/l5VVwtJ1bylFrZS0EbvJvhrgjx8/XQJ4jH3JDfpf9Ohn/zcFHyerscnMHFjmAWEHLrNnNxexWBQ/CfN/NbdswVbg68glVnAh9/ugdevw0F5dPjGkEhq+GhkNd7YcQxOuwufnz+A8NT3igkUSFkbUgxuiFNfjhz0tbEEp3QmiaPn+jgy8wt5fC60BVJ4XBgMTnppKOLhgL+Fdof64LDrLCBUBGGny24wiCoGufJyXeXZgPb1PUhnUio4JmPhUjpdD8UR8CTxwXADZpP/ZiogKIJg4JteRGbGUC9MnK7Ce1YMFIBmMFi5fD3am3s4k01REaAw7tWzeH3zNK7d0vnIqL+0DxrrHlAAbLc56bAA/BEdZc2mUX2jB/oye76iRGtrH+FQsJsEpCTRE2sSCK1N4NS4jy/H3AWAkkQ2J584v5/CkR9Ki0xSuf7VnqgCUIv8lLmK7qvdTKF13Uhnk7zvi13U3ToFjzOHAxdXcTqvkUY2fvPZY6QW+cR3+1iC31XW8juk1kCV6TuVdkrA2wo91YDxqwN4YWMMl2M1ikFxwxG2btyJqZtX8Ouflyw2JfXRxxc6m0Uzy42WTmZ5i+MaPey/g8M/1+H3Wb2as0j5ebGWwqDIdFLGt1WaoCHPO2tHaT5NherJM6oFONXfeXb7fw47sRozTTsx2peP40JkGS7+5a7muFLSLEjhb+rfdXaiquOa80yxqTtIzmWWPK7Vo9geyf4QYLpwRKre4rkE82Q1NhudR+JmkmF9Z6h3b0vw90pszPQUE+kOVpJLtblbKcSn5yCszLKoO+A1I3NLAGNNFrv00wtZkew257JsVMuXYj0SfOlLv7ypEpYd1SHxS39bivLNZFK5sWgkMZjN5I73d349bhXjH7S8akhgVgIUAAAAAElFTkSuQmCC"
+                         style="padding-top:5px;" alt="Dependency Injection Container"/>
+        </span>
+        <strong>Tidy</strong>
+        <span class="count">
+            <span>{{ collector.data|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Tidy</h2>
+
+    <div class="calls">
+        {% for i,d in collector.data %}
+            <div class="call call-{{ (i+1) }}">
+                <b>{{ d.alias|default('Cleanup') }}:</b>
+
+                <table class="inline" style="overflow: scroll; table-layout: fixed;">
+                    <tr>
+                        <th>Type</th>
+                        <th>Line</th>
+                        <th>Column</th>
+                        <th>Message</th>
+                    </tr>
+                    {% for error in d.errors %}
+                        <tr>
+                            <td>{{ error.type }}</td>
+                            <td>{{ error.line }}</td>
+                            <td>{{ error.column }}</td>
+                            <td>{{ error.message }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                {% set lines = d.getDirtyLines(error.line, 9) %}
+                                {% set numbers = lines|keys %}
+                                <pre class="brush: html; first-line: {{ numbers[0]+1 }}; highlight: {{ error.line }}; toolbar: false;">
+                                    {% for line in lines %}
+                                        {{ line }}
+                                    {% endfor %}
+                                </pre>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <b>Dirty HTML:</b>
+                <pre class="brush: html; collapse: true;">
+                    {{ d.dirty|join("\r\n") }}
+                </pre>
+
+                <b>Cleaned HTML:</b>
+                <pre class="brush: html; collapse: true;">
+                    {{ d.clean|join("\r\n") }}
+                </pre>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+{% endblock %}

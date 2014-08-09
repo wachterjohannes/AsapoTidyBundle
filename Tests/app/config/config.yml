@@ -1,0 +1,6 @@
+framework:
+    secret: secret
+    templating: { engines: [] }
+    test: ~
+    profiler:
+        enabled: yes

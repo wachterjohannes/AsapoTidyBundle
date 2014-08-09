@@ -22,7 +22,25 @@ class AsapoTidyExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        if ($config['config'] === null || sizeof($config['config']) === 0) {
+            $container->setParameter('asapo_tidy.config', array('indent' => 2, 'output-xhtml' => 1, 'wrap' => 200));
+        } else {
+            $container->setParameter('asapo_tidy.config', $config['config']);
+        }
+
+        $container->setParameter('asapo_tidy.encoding', $config['encoding']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        // include definition of response listener if enabled
+        if ($config['response_listener'] === true) {
+            $loader->load('response_listener.xml');
+        }
+
+        // include definition of data collector if enabled
+        if ($config['data_collector'] === true) {
+            $loader->load('data_collector.xml');
+        }
     }
 }
