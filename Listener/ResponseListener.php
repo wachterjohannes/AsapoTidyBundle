@@ -35,6 +35,6 @@ class ResponseListener
         $content = $event->getResponse()->getContent();
         $event->getResponse()->setContent($this->tidy->cleanUp($content));
 
-        $errors = $this->tidy->getErrorBuffer();
+        $errors = $this->tidy->getLastErrorBuffer();
     }
 } 

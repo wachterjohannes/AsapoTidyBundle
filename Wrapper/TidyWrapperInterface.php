@@ -12,10 +12,10 @@ interface TidyWrapperInterface
     public function cleanUp($html);
 
     /**
-     * returns parsed error buffer
-     * @return string[]
+     * returns parsed error buffer of last cleanup run
+     * @return array|null
      */
-    public function getErrorBuffer();
+    public function getLastErrorBuffer();
 
     /**
      * returns data of tidy object

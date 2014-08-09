@@ -14,7 +14,7 @@ namespace Asapo\Bundle\TidyBundle\Wrapper;
  * Data Container for one clean up run
  * @package Asapo\Bundle\TidyBundle\Wrapper
  */
-class Container
+class TidyData
 {
     /**
      * dirty html lines
@@ -42,13 +42,15 @@ class Container
         $this->errors = array();
         foreach (explode("\n", $errors) as $line) {
             preg_match("/line ([0-9]*) column ([0-9]*) - ([a-zA-z]*): (.*)/", $line, $output);
-            $this->errors[] = array(
-                'full' => $output[0],
-                'line' => $output[1],
-                'column' => $output[2],
-                'type' => $output[3],
-                'message' => $output[4]
-            );
+            if (sizeof($output) > 0) {
+                $this->errors[] = array(
+                    'full' => $output[0],
+                    'line' => $output[1],
+                    'column' => $output[2],
+                    'type' => $output[3],
+                    'message' => $output[4]
+                );
+            }
         }
     }
 
@@ -78,7 +80,7 @@ class Container
     {
         $result = array();
         $upper = $middle + round($length / 2);
-        $smaller = $middle - round($length / 2)-1;
+        $smaller = $middle - round($length / 2) - 1;
         for ($i = $smaller; $i < $upper; $i++) {
             $result[$i] = $this->dirty[$i];
         }

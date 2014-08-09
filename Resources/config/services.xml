@@ -6,14 +6,14 @@
 
     <parameters>
         <parameter key="tidy.class">Asapo\Bundle\TidyBundle\Wrapper\TidyWrapper</parameter>
-        <parameter key="asapo_tidy.tidy.instance.class">tidy</parameter>
+        <parameter key="asapo_tidy.tidy.factory.class">Asapo\Bundle\TidyBundle\Factory\TidyFactory</parameter>
         <parameter key="asapo_tidy.response_listener.class">Asapo\Bundle\TidyBundle\Listener\ResponseListener</parameter>
         <parameter key="asapo_tidy.data_collector.class">Asapo\Bundle\TidyBundle\DataCollector\TidyDataCollector</parameter>
     </parameters>
 
     <services>
         <!-- tidy wrapper -->
-        <service id="tidy.instance" class="%asapo_tidy.tidy.instance.class%" public="false"/>
+        <service id="tidy.factory" class="%asapo_tidy.tidy.factory.class%" public="false"/>
         <service id="tidy" class="%tidy.class%">
             <!-- TODO config -->
             <argument type="collection">
@@ -22,7 +22,7 @@
                 <argument type="string" key="wrap">200</argument>
             </argument>
             <argument type="string">utf8</argument>
-            <argument type="service" id="tidy.instance"/>
+            <argument type="service" id="tidy.factory"/>
         </service>
 
         <!-- response listener -->

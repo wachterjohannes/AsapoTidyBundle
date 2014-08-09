@@ -2,15 +2,19 @@
 
 namespace Asapo\Bundle\TidyBundle\Wrapper;
 
-use tidy;
+use Asapo\Bundle\TidyBundle\Factory\TidyFactoryInterface;
 
+/**
+ * Wraps tidy instances and provides information for clean up runs
+ * @package Asapo\Bundle\TidyBundle\Wrapper
+ */
 class TidyWrapper implements TidyWrapperInterface
 {
     /**
      * instance of tidy
-     * @var tidy
+     * @var TidyFactoryInterface
      */
-    private $tidy;
+    private $tidyFactory;
 
     /**
      * config array of tidy
@@ -26,15 +30,15 @@ class TidyWrapper implements TidyWrapperInterface
 
     /**
      * each cleanUp call create an entry
-     * @var array
+     * @var TidyData[]
      */
     private $data = array();
 
-    public function __construct($options, $encoding, tidy $tidy)
+    public function __construct($options, $encoding, TidyFactoryInterface $tidyFactory)
     {
         $this->options = $options;
         $this->encoding = $encoding;
-        $this->tidy = $tidy;
+        $this->tidyFactory = $tidyFactory;
     }
 
     /**
@@ -42,25 +46,29 @@ class TidyWrapper implements TidyWrapperInterface
      */
     public function cleanUp($html)
     {
-        // reset tidy
-        $this->tidy->errorBuffer = null;
+        /** @var \tidy $tidy */
+        $tidy = $this->tidyFactory->create();
 
         // repair
-        $this->tidy->parseString($html, $this->options, $this->encoding);
-        $this->tidy->cleanRepair();
+        $tidy->parseString($html, $this->options, $this->encoding);
+        $tidy->cleanRepair();
 
         // save data
-        $this->data[] = new Container($this->tidy->root()->value, $html, $this->getErrorBuffer());
+        $this->data[] = new TidyData($tidy->root()->value, $html, $tidy->errorBuffer);
 
-        return $this->tidy->root()->value;
+        return $tidy->root()->value;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getErrorBuffer()
+    public function getLastErrorBuffer()
     {
-        return $this->tidy->errorBuffer;
+        if (sizeof($this->data) > 0) {
+            return $this->data[sizeof($this->data) - 1]->getErrors();
+        } else {
+            return null;
+        }
     }
 
     /**
