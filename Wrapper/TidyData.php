@@ -63,6 +63,14 @@ class TidyData
     }
 
     /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
      * @return string[]
      */
     public function getClean()

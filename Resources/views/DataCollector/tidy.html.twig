@@ -13,7 +13,7 @@
     {% set text %}
     {% for i,d in collector.data %}
         <div class="sf-toolbar-info-piece">
-            <b>Call {{ (i+1) }}:</b>
+            <b>{{ d.alias|default('Cleanup') }}:</b>
             <span class="sf-toolbar-status sf-toolbar-status-red">{{ d.errors|length }}</span>
         </div>
     {% endfor %}

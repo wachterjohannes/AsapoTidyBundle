@@ -7,9 +7,10 @@ interface TidyWrapperInterface
     /**
      * clean up html string
      * @param string $html dirty html
+     * @param string $alias
      * @return string
      */
-    public function cleanUp($html);
+    public function cleanUp($html, $alias = null);
 
     /**
      * returns parsed error buffer of last cleanup run
