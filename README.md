@@ -11,7 +11,7 @@ This Bundle uses [tidy-php](http://php.net/manual/de/book.tidy.php) to clean and
 
 ## What tidy is?
 
-Tidy is a binding for the Tidy HTML clean and repair utility which allows you to not only clean and otherwise manipulate HTML documents, but also traverse the document tree.
+Tidy is a binding for the Tidy HTML clean and repair utility which allows you to clean, manipulate HTML documents and traverse the document tree.
 
 [Source ...](http://php.net/manual/de/intro.tidy.php)
 
