@@ -16,6 +16,13 @@ namespace Asapo\Bundle\TidyBundle\Wrapper;
  */
 class TidyData
 {
+
+    /**
+     * alias of tidy cleanup run
+     * @var string
+     */
+    private $alias;
+
     /**
      * dirty html lines
      * @var string[]
@@ -34,10 +41,11 @@ class TidyData
      */
     private $errors;
 
-    function __construct($clean, $dirty, $errors)
+    function __construct($clean, $dirty, $errors, $alias)
     {
         $this->clean = explode("\n", $clean);
         $this->dirty = explode("\n", $dirty);
+        $this->alias = $alias;
 
         $this->errors = array();
         foreach (explode("\n", $errors) as $line) {
@@ -79,8 +87,8 @@ class TidyData
     public function getDirtyLines($middle, $length)
     {
         $result = array();
-        $upper = $middle + round($length / 2);
-        $smaller = $middle - round($length / 2) - 1;
+        $upper = $middle + floor($length / 2);
+        $smaller = $middle - floor($length / 2);
         for ($i = $smaller; $i < $upper; $i++) {
             $result[$i] = $this->dirty[$i];
         }

@@ -25,9 +25,8 @@
 {% block head %}
     {{ parent() }}
 
-    <link href="{{ asset('bundles/asapotidy/css/shCore.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('bundles/asapotidy/css/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('bundles/asapotidy/css/shThemeRDark.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/asapotidy/css/shCore.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/asapotidy/css/shThemeDefault.css') }}" rel="stylesheet" type="text/css"/>
 
     <script src="{{ asset('bundles/asapotidy/js/shCore.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/asapotidy/js/shBrushXml.js') }}" type="text/javascript"></script>
@@ -52,9 +51,9 @@
     <div class="calls">
         {% for i,d in collector.data %}
             <div class="call call-{{ (i+1) }}">
-                <b>Call {{ (i+1) }}:</b>
+                <b>{{ d.alias|default('Cleanup') }}:</b>
 
-                <table class="inline">
+                <table class="inline" style="overflow: scroll; table-layout: fixed;">
                     <tr>
                         <th>Type</th>
                         <th>Line</th>
@@ -70,12 +69,27 @@
                         </tr>
                         <tr>
                             <td colspan="4">
-
+                                {% set lines = d.getDirtyLines(error.line, 9) %}
+                                {% set numbers = lines|keys %}
+                                <pre class="brush: html; first-line: {{ numbers[0]+1 }}; highlight: {{ error.line }}; toolbar: false;">
+                                    {% for line in lines %}
+                                        {{ line }}
+                                    {% endfor %}
+                                </pre>
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
-                {{ dump(d.getDirtyLines(5, 7)) }}
+
+                <b>Dirty HTML:</b>
+                <pre class="brush: html; collapse: true;">
+                    {{ d.dirty|join("\r\n") }}
+                </pre>
+
+                <b>Cleaned HTML:</b>
+                <pre class="brush: html; collapse: true;">
+                    {{ d.clean|join("\r\n") }}
+                </pre>
             </div>
         {% endfor %}
     </div>

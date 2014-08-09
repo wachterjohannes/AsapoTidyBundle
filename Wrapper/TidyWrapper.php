@@ -44,7 +44,7 @@ class TidyWrapper implements TidyWrapperInterface
     /**
      * {@inheritdoc}
      */
-    public function cleanUp($html)
+    public function cleanUp($html, $alias = null)
     {
         /** @var \tidy $tidy */
         $tidy = $this->tidyFactory->create();
@@ -54,7 +54,7 @@ class TidyWrapper implements TidyWrapperInterface
         $tidy->cleanRepair();
 
         // save data
-        $this->data[] = new TidyData($tidy->root()->value, $html, $tidy->errorBuffer);
+        $this->data[] = new TidyData($tidy->root()->value, $html, $tidy->errorBuffer, $alias);
 
         return $tidy->root()->value;
     }
